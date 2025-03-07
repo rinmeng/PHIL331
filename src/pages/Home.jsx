@@ -78,7 +78,7 @@ const Home = ({ setOpenLoginDialog }) => {
   return (
     <div className="h-screen">
       <div className="flex w-full items-center justify-center mt-4 gap-4">
-        <Card className={"w-1/4"}>
+        <Card className={"w-3/4 lg:w-1/4"}>
           <CardHeader className={"text-center text-5xl"}>Home</CardHeader>
           <CardContent className={"text-center text-4xl"}>
             <h1>Count: {count}</h1>
