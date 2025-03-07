@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/Button";
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "@/components/Navbar";
