@@ -16,10 +16,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 // Links configuration array - you can modify this based on your routes
 const links = [
   { label: "Home", route: "/" },
+  { label: "Citation", route: "/citation" },
+  { label: "Team", route: "/team" },
   { label: "About", route: "/about" },
-  { label: "Topics", route: "/topics" },
-  { label: "Resources", route: "/resources" },
-  { label: "Contact", route: "/contact" },
 ];
 
 const Navbar = () => {
