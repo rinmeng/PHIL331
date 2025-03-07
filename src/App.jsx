@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { useEffect } from "react";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
   }, []);
 
   return (
-    <HashRouter>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<div>Home Page</div>} />
@@ -18,7 +18,7 @@ function App() {
         <Route path="/citation" element={<div>Citation Page</div>} />
         <Route path="/team" element={<div>Team Members</div>} />
       </Routes>
-    </HashRouter>
+    </>
   );
 }
 
