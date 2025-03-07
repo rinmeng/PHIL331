@@ -7,7 +7,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Menu, Moon } from "lucide-react";
+import { LogIn, LogOut, Menu, Moon } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -17,6 +17,8 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Toggle } from "@/components/ui/toggle";
+import { useAuth } from "@/utils/AuthProvider";
+import { toast } from "sonner";
 
 // Links configuration array - you can modify this based on your routes
 const links = [
@@ -26,14 +28,47 @@ const links = [
   { label: "About", route: "/about" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const handleNavigation = (route) => {
     navigate(route);
     setOpen(false);
   };
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      setFeedbackMessage({
+        title: "Success",
+        description: "You have been logged out",
+      });
+    } catch (error) {
+      setFeedbackMessage({
+        title: "Error",
+        description: error.message,
+      });
+      console.error("Error logging out:", error.message);
+    }
+    setOpen(false);
+  };
+
+  const AuthButtons = () =>
+    user ? (
+      <div className="flex items-center justify-center">
+        <Button onClick={handleLogout} variant="outline">
+          <span className="text-sm text-muted-foreground">{user.email}</span>
+          <LogOut />
+        </Button>
+      </div>
+    ) : (
+      <Button onClick={() => setOpenLoginDialog(true)} variant="outline">
+        Login
+        <LogIn className="ml-2 h-4 w-4" />
+      </Button>
+    );
 
   return (
     <div className="border-b">
@@ -62,13 +97,18 @@ const Navbar = () => {
                 </Button>
               </NavigationMenuItem>
             ))}
-            <Toggle
-              variant={"outline"}
-              aria-label="Toggle italic"
-              onClick={() => document.documentElement.classList.toggle("dark")}
-            >
-              <Moon />
-            </Toggle>
+            <div className="flex gap-4 items-center">
+              <Toggle
+                variant={"outline"}
+                aria-label="Toggle italic"
+                onClick={() =>
+                  document.documentElement.classList.toggle("dark")
+                }
+              >
+                <Moon />
+              </Toggle>
+              <AuthButtons />
+            </div>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -85,11 +125,9 @@ const Navbar = () => {
             <SheetContent side="right" className="w-[240px] sm:w-[300px] ">
               <SheetHeader>
                 <SheetTitle>
-                  <h2 className="text-xl font-bold">PHIL331 Project</h2>
+                  <div className="text-xl font-bold">PHIL331 Project</div>
                 </SheetTitle>
-                <SheetDescription>
-                  <p>Navigation menu</p>
-                </SheetDescription>
+                <SheetDescription>Navigation menu</SheetDescription>
               </SheetHeader>
               <nav className="flex flex-col items-center gap-4 mt-8">
                 {links.map((link) => (
@@ -115,6 +153,8 @@ const Navbar = () => {
                   <Moon />
                 </Toggle>
               </div>
+
+              <AuthButtons />
             </SheetContent>
           </Sheet>
         </div>
