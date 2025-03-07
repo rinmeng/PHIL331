@@ -2,6 +2,10 @@ import { Button } from "@/components/ui/Button";
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import Home from "@/pages/Home";
+import About from "@/pages/About";
+import Citation from "@/pages/Citation";
+import Team from "@/pages/Team";
 
 function App() {
   // dark mode
@@ -13,10 +17,10 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<div>Home Page</div>} />
-        <Route path="/about" element={<div>About</div>} />
-        <Route path="/citation" element={<div>Citation Page</div>} />
-        <Route path="/team" element={<div>Team Members</div>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/citation" element={<Citation />} />
+        <Route path="/team" element={<Team />} />
       </Routes>
     </>
   );
