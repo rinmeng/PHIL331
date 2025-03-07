@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { HashRouter as Router, useNavigate } from "react-router-dom";
+import {
+  HashRouter as Router,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -18,7 +22,6 @@ import {
 } from "@/components/ui/sheet";
 import { Toggle } from "@/components/ui/toggle";
 import { useAuth } from "@/utils/AuthProvider";
-import { toast } from "sonner";
 
 // Links configuration array - you can modify this based on your routes
 const links = [
@@ -31,6 +34,7 @@ const links = [
 const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, signOut } = useAuth();
 
   const handleNavigation = (route) => {
@@ -64,10 +68,12 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
         </Button>
       </div>
     ) : (
-      <Button onClick={() => setOpenLoginDialog(true)} variant="outline">
-        Login
-        <LogIn className="ml-2 h-4 w-4" />
-      </Button>
+      <div className="flex items-center justify-center">
+        <Button onClick={() => setOpenLoginDialog(true)} variant="outline">
+          Login
+          <LogIn className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
     );
 
   return (
@@ -91,7 +97,11 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
                 <Button
                   variant="ghost"
                   onClick={() => handleNavigation(link.route)}
-                  className={navigationMenuTriggerStyle()}
+                  className={`${navigationMenuTriggerStyle()} ${
+                    location.pathname === link.route
+                      ? "bg-accent text-accent-foreground"
+                      : ""
+                  }`}
                 >
                   {link.label}
                 </Button>
@@ -135,7 +145,11 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
                     key={link.route}
                     variant="ghost"
                     onClick={() => handleNavigation(link.route)}
-                    className="w-3/4"
+                    className={`w-3/4 ${
+                      location.pathname === link.route
+                        ? "bg-accent text-accent-foreground"
+                        : ""
+                    }`}
                   >
                     {link.label}
                   </Button>
