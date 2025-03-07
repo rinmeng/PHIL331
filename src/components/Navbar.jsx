@@ -26,9 +26,9 @@ import { useAuth } from "@/utils/AuthProvider";
 // Links configuration array - you can modify this based on your routes
 const links = [
   { label: "Home", route: "/" },
+  { label: "About", route: "/about" },
   { label: "Citation", route: "/citation" },
   { label: "Team", route: "/team" },
-  { label: "About", route: "/about" },
 ];
 
 const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
