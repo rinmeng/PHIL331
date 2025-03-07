@@ -104,7 +104,11 @@ function App() {
       </Routes>
 
       {/* Login Dialog */}
-      <Dialog open={openLoginDialog} onOpenChange={setOpenLoginDialog}>
+      <Dialog
+        open={openLoginDialog}
+        onOpenChange={setOpenLoginDialog}
+        className="max-w-md"
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Sign In</DialogTitle>
