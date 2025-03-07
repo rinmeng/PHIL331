@@ -12,7 +12,7 @@ function App() {
         <div className="flex flex-col items-center justify-center w-full text-center">
           <h1>Welcome to the PHIL331 Project</h1>
           <div>
-            <Button variant="secondary">Click me!</Button>
+            <Button variant="default">Click me!</Button>
           </div>
         </div>
       </div>
