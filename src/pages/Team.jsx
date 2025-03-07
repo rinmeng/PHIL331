@@ -1,6 +1,6 @@
 const Team = () => {
   return (
-    <div>
+    <div className="h-screen flex items-center justify-center">
       <h1>Team</h1>
     </div>
   );

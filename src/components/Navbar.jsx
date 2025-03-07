@@ -1,15 +1,22 @@
 import { useState } from "react";
-import { HashRouter as Router, NavLink } from "react-router-dom";
+import { HashRouter as Router, useNavigate } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu, Moon } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import { Toggle } from "@/components/ui/toggle";
 
 // Links configuration array - you can modify this based on your routes
 const links = [
@@ -21,14 +28,24 @@ const links = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigation = (route) => {
+    navigate(route);
+    setOpen(false);
+  };
 
   return (
     <div className="border-b">
-      <div className="flex h-16 items-center px-4 container mx-auto">
+      <div className="flex h-16 items-center px-4 container justify-between mx-auto">
         <div className="mr-4 md:flex font-bold text-xl">
-          <NavLink to="/" className="flex items-center">
+          <Button
+            variant="ghost"
+            onClick={() => handleNavigation("/")}
+            className="font-bold text-xl"
+          >
             PHIL331
-          </NavLink>
+          </Button>
         </div>
 
         {/* Desktop Navigation */}
@@ -36,13 +53,22 @@ const Navbar = () => {
           <NavigationMenuList>
             {links.map((link) => (
               <NavigationMenuItem key={link.route}>
-                <NavLink to={link.route}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    {link.label}
-                  </NavigationMenuLink>
-                </NavLink>
+                <Button
+                  variant="ghost"
+                  onClick={() => handleNavigation(link.route)}
+                  className={navigationMenuTriggerStyle()}
+                >
+                  {link.label}
+                </Button>
               </NavigationMenuItem>
             ))}
+            <Toggle
+              variant={"outline"}
+              aria-label="Toggle italic"
+              onClick={() => document.documentElement.classList.toggle("dark")}
+            >
+              <Moon />
+            </Toggle>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -55,23 +81,40 @@ const Navbar = () => {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[240px] sm:w-[300px]">
-              <nav className="flex flex-col gap-4 mt-8">
+
+            <SheetContent side="right" className="w-[240px] sm:w-[300px] ">
+              <SheetHeader>
+                <SheetTitle>
+                  <h2 className="text-xl font-bold">PHIL331 Project</h2>
+                </SheetTitle>
+                <SheetDescription>
+                  <p>Navigation menu</p>
+                </SheetDescription>
+              </SheetHeader>
+              <nav className="flex flex-col items-center gap-4 mt-8">
                 {links.map((link) => (
-                  <NavLink
+                  <Button
                     key={link.route}
-                    to={link.route}
-                    onClick={() => setOpen(false)}
-                    className={({ isActive }) =>
-                      `px-2 py-1 rounded-md ${
-                        isActive ? "bg-muted font-medium" : "hover:bg-muted/50"
-                      }`
-                    }
+                    variant="ghost"
+                    onClick={() => handleNavigation(link.route)}
+                    className="w-3/4"
                   >
                     {link.label}
-                  </NavLink>
+                  </Button>
                 ))}
               </nav>
+              {/* toggle dark/light mode */}
+              <div className="flex gap-4 justify-center">
+                <Toggle
+                  variant={"outline"}
+                  aria-label="Toggle italic"
+                  onClick={() =>
+                    document.documentElement.classList.toggle("dark")
+                  }
+                >
+                  <Moon />
+                </Toggle>
+              </div>
             </SheetContent>
           </Sheet>
         </div>
