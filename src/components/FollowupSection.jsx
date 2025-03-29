@@ -180,7 +180,7 @@ export const FollowupSection = ({ form }) => {
                             <RadioGroup
                               onValueChange={field.onChange}
                               defaultValue={field.value}
-                              className="flex flex-col sm:flex-row sm:justify-between gap-1"
+                              className="flex flex-col xl:flex-row justify-between gap-1"
                             >
                               {[1, 2, 3, 4, 5].map((value) => (
                                 <FormItem
