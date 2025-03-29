@@ -95,7 +95,7 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
             {links.map((link) => (
               <NavigationMenuItem key={link.route}>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   onClick={() => handleNavigation(link.route)}
                   className={`${navigationMenuTriggerStyle()} ${
                     location.pathname === link.route
@@ -109,7 +109,7 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
             ))}
             <div className="flex gap-4 items-center">
               <Toggle
-                variant={"outline"}
+                variant="outline"
                 aria-label="Toggle italic"
                 onClick={() =>
                   document.documentElement.classList.toggle("dark")
@@ -143,7 +143,7 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
                 {links.map((link) => (
                   <Button
                     key={link.route}
-                    variant="ghost"
+                    variant="outline"
                     onClick={() => handleNavigation(link.route)}
                     className={`w-3/4 ${
                       location.pathname === link.route
