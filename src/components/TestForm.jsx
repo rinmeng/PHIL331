@@ -195,6 +195,11 @@ export const TestForm = ({ onSubmit }) => {
       followup3: "",
       followup4: "",
       followup5: "",
+      followup6: "",
+      followup7: "",
+      followup8: "",
+      followup9: "",
+      followup10: "",
     },
   });
 

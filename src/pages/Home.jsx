@@ -1,4 +1,10 @@
 import { TestForm } from "@/components/TestForm";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import supabase from "@/config/supabaseClient";
 import { toast } from "sonner";
 
@@ -18,10 +24,18 @@ const Home = () => {
 
   return (
     <div className="min-h-screen p-4">
-      <div className="flex flex-col items-center container mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          Philosophy Assessment
-        </h1>
+      <div className="flex flex-col items-center container mx-auto space-y-8">
+        <Card className="w-1/2">
+          <CardHeader className="text-center text-2xl">
+            <CardTitle>Philosophy Assessment</CardTitle>
+            <CardDescription>
+              This test is designed to assess your philosophical beliefs and
+              values. Please answer the questions honestly and to the best of
+              your ability. Your responses will be anonymous and used for
+              research purposes only.
+            </CardDescription>
+          </CardHeader>
+        </Card>
         <TestForm onSubmit={handleSubmit} />
       </div>
     </div>

@@ -44,14 +44,52 @@ export const FollowupSection = ({ form }) => {
       {
         id: "followup4",
         question:
-          "Describe any additional information that would have helped you make your decisions.",
+          "Should AI that demonstrates self-awareness be granted rights similar to humans? Why or why not?",
         type: "text",
         maxWords: 100,
       },
       {
         id: "followup5",
         question:
-          "Should AI that demonstrates self-awareness be granted rights similar to humans? Why or why not?",
+          "Would your decision change if the AI were developed to simulate emotions more convincingly?",
+        type: "text",
+        maxWords: 100,
+      },
+
+      {
+        id: "followup6",
+        question:
+          "Do you think AI should be subject to ethical guidelines different from those applied to humans? Why or why not?",
+        type: "text",
+        maxWords: 100,
+      },
+
+      {
+        id: "followup7",
+        question:
+          "Would you be more trusting of AI if it were developed to be explainable and transparent in its decision-making?",
+        type: "text",
+        maxWords: 100,
+      },
+
+      {
+        id: "followup8",
+        question:
+          "How should society balance the benefits of AI (efficiency, fairness, accuracy) with ethical concerns about AI consciousness?",
+        type: "text",
+        maxWords: 100,
+      },
+      {
+        id: "followup9",
+        question:
+          "What potential risks do you foresee if AI is granted too much decision-making power in human affairs?",
+        type: "text",
+        maxWords: 100,
+      },
+      {
+        id: "followup10",
+        question:
+          "Do you believe human oversight should always be required for AI-driven decisions? If so, in what situations?",
         type: "text",
         maxWords: 100,
       },
@@ -96,7 +134,8 @@ export const FollowupSection = ({ form }) => {
           <h2 className="text-xl sm:text-2xl font-bold">Follow-up Questions</h2>
           <p className="text-sm sm:text-base text-muted-foreground">
             Please answer these follow-up questions based on your previous
-            responses.
+            responses. It is not necessary to answer all the questions, but your
+            input is valuable for our research.
           </p>
         </CardHeader>
         <CardContent className="space-y-3">
