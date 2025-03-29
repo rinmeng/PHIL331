@@ -131,10 +131,7 @@ const Home = () => {
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={
-                    isSubmitting ||
-                    Object.values(form.getValues()).some((value) => !value)
-                  }
+                  disabled={isSubmitting}
                 >
                   {isSubmitting ? "Submitting..." : "Submit Response"}
                 </Button>
