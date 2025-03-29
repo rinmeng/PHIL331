@@ -120,10 +120,11 @@ export const FollowupSection = ({ form }) => {
                   control={form.control}
                   name={q.id}
                   rules={{
-                    required: "This field is required",
+                    // Removed the "required" validation
                     validate:
                       q.type === "text"
                         ? (value) => {
+                            if (!value) return true; // Allow empty values
                             const wordCount = countWords(value);
                             return (
                               wordCount <= 100 ||
