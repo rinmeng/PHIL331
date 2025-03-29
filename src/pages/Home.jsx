@@ -12,7 +12,7 @@ const Home = () => {
   const handleSubmit = async (data) => {
     try {
       // Insert the form data into the database
-      const { error } = await supabase.from("user_responses").insert([data]);
+      const { error } = await supabase.from("user_response").insert([data]);
 
       if (error) throw error;
       toast.success("Test responses submitted successfully!");
