@@ -19,6 +19,7 @@ import { TrendingUp } from "lucide-react";
 import supabase from "@/config/supabaseClient";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ethicalDilemmas } from "@/lib/questions";
+import FollowupStatistics from "./FollowupStatistics";
 
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
@@ -116,13 +117,17 @@ const Statistics = () => {
         totalResponses > 0 ? Math.round((value / totalResponses) * 100) : 0;
 
       return (
-        <div className="bg-white p-2 border rounded shadow-md">
-          <p className="font-medium">{payload[0].payload.option}</p>
-          <p className="text-sm text-gray-700">{optionText}</p>
-          <p className="text-sm font-bold">
-            {value} responses ({percentage}%)
-          </p>
-        </div>
+        <Card className="">
+          <CardHeader>
+            <CardTitle>{payload[0].payload.option}</CardTitle>
+            <CardDescription className="text-sm text-muted-foreground">
+              {optionText}
+            </CardDescription>
+            <CardContent>
+              {value} responses ({percentage}%)
+            </CardContent>
+          </CardHeader>
+        </Card>
       );
     }
     return null;
@@ -136,11 +141,12 @@ const Statistics = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {Object.keys(stats).map((questionKey) => (
-          <Card key={questionKey} className="w-full">
+          <Card key={questionKey} className="w-full gap-0">
             <CardHeader className="items-center pb-4">
               <CardTitle>{getChartTitle(questionKey)}</CardTitle>
-              <CardDescription>
-                Showing response distribution across all options
+              <CardDescription className="text-center">
+                {ethicalDilemmas.find((q) => q.id === questionKey)?.question ||
+                  ""}
               </CardDescription>
             </CardHeader>
             <CardContent className="pb-0">
@@ -149,11 +155,14 @@ const Statistics = () => {
                   <Skeleton className="h-[250px] w-full" />
                 </div>
               ) : (
-                <div className="mx-auto aspect-square max-h-[250px] w-full">
+                <div className="mx-auto aspect-square max-h-[250px]  w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={stats[questionKey]} outerRadius={90}>
+                    <RadarChart data={stats[questionKey]} outerRadius={100}>
                       <PolarGrid />
-                      <PolarAngleAxis dataKey="option" />
+                      <PolarAngleAxis
+                        dataKey="option"
+                        tick={{ fontSize: 13, dy: 5 }} // Adjust dy for better spacing
+                      />
                       <Tooltip
                         content={<CustomTooltip questionId={questionKey} />}
                       />
@@ -174,14 +183,16 @@ const Statistics = () => {
                 Total responses: {totalResponses}{" "}
                 <TrendingUp className="h-4 w-4" />
               </div>
+
               <div className="flex items-center gap-2 leading-none text-muted-foreground">
-                {ethicalDilemmas.find((q) => q.id === questionKey)?.question ||
-                  ""}
+                Showing response distribution across all options
               </div>
             </CardFooter>
           </Card>
         ))}
       </div>
+
+      <FollowupStatistics />
     </div>
   );
 };
