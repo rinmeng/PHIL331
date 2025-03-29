@@ -9,59 +9,62 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { useState, useEffect } from "react";
-import { z } from "zod";
+import { useState, useEffect, useMemo } from "react";
 
 export const FollowupSection = ({ form }) => {
   // Define follow-up questions (some with Likert scale, some with open-ended responses)
-  const followupQuestions = [
-    {
-      id: "followup1",
-      question: "How confident are you in your answers to the questions above?",
-      type: "likert",
-      labels: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"],
-    },
-    {
-      id: "followup2",
-      question:
-        "What factors influenced your choices when answering the questions?",
-      type: "text",
-      maxWords: 100,
-    },
-    {
-      id: "followup3",
-      question:
-        "How much would you agree that the scenarios presented were realistic?",
-      type: "likert",
-      labels: [
-        "Strongly disagree",
-        "Disagree",
-        "Neutral",
-        "Agree",
-        "Strongly agree",
-      ],
-    },
-    {
-      id: "followup4",
-      question:
-        "Describe any additional information that would have helped you make your decisions.",
-      type: "text",
-      maxWords: 100,
-    },
-    {
-      id: "followup5",
-      question:
-        "How satisfied were you with the available options for each question?",
-      type: "likert",
-      labels: [
-        "Very unsatisfied",
-        "Unsatisfied",
-        "Neutral",
-        "Satisfied",
-        "Very satisfied",
-      ],
-    },
-  ];
+  const followupQuestions = useMemo(
+    () => [
+      {
+        id: "followup1",
+        question:
+          "How confident are you in your answers to the questions above?",
+        type: "likert",
+        labels: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"],
+      },
+      {
+        id: "followup2",
+        question:
+          "What factors influenced your choices when answering the questions?",
+        type: "text",
+        maxWords: 100,
+      },
+      {
+        id: "followup3",
+        question:
+          "How much would you agree that the scenarios presented were realistic?",
+        type: "likert",
+        labels: [
+          "Strongly disagree",
+          "Disagree",
+          "Neutral",
+          "Agree",
+          "Strongly agree",
+        ],
+      },
+      {
+        id: "followup4",
+        question:
+          "Describe any additional information that would have helped you make your decisions.",
+        type: "text",
+        maxWords: 100,
+      },
+      {
+        id: "followup5",
+        question:
+          "How satisfied were you with the available options for each question?",
+        type: "likert",
+        labels: [
+          "Very unsatisfied",
+          "Unsatisfied",
+          "Neutral",
+          "Satisfied",
+          "Very satisfied",
+        ],
+      },
+    ],
+    []
+  );
 
   // Word count state for each text question
   const [wordCounts, setWordCounts] = useState({});
@@ -91,7 +94,7 @@ export const FollowupSection = ({ form }) => {
         });
       }
     });
-  }, [form]);
+  }, [form, followupQuestions]);
 
   return (
     <div className="space-y-8">

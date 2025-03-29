@@ -41,7 +41,7 @@ export const QuestionCard = ({ question, form }) => {
 
         <FormField
           control={form.control}
-          name={`${id}`}
+          name={id}
           rules={{ required: "Please select an answer" }}
           render={({ field }) => (
             <FormItem className="space-y-3">
@@ -54,11 +54,11 @@ export const QuestionCard = ({ question, form }) => {
                 >
                   {options.map((option) => (
                     <FormItem
-                      key={option.id}
+                      key={option.value}
                       className="flex items-center space-x-3 space-y-0"
                     >
                       <FormControl>
-                        <RadioGroupItem value={option.id} />
+                        <RadioGroupItem value={option.value} />
                       </FormControl>
                       <FormLabel className="font-normal">
                         {option.label}

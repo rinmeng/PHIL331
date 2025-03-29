@@ -1,3 +1,4 @@
+Form.jsx;
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -19,63 +20,63 @@ import media from "@/assets/media.png";
 export const TestForm = ({ onSubmit }) => {
   const [questions] = useState([
     {
-      id: 1,
+      id: "q1",
       title: "Question 1",
       scenario: "This is the first scenario of the test.",
       imagePath: media,
       options: [
-        { id: "q1_a", label: "Option A" },
-        { id: "q1_b", label: "Option B" },
-        { id: "q1_c", label: "Option C" },
-        { id: "q1_d", label: "Option D" },
+        { value: "1", label: "Option A" },
+        { value: "2", label: "Option B" },
+        { value: "3", label: "Option C" },
+        { value: "4", label: "Option D" },
       ],
     },
     {
-      id: 2,
+      id: "q2",
       title: "Question 2",
       scenario: "This is scenario 2 of the test.",
       imagePath: media,
       options: [
-        { id: "q2_a", label: "Option A" },
-        { id: "q2_b", label: "Option B" },
-        { id: "q2_c", label: "Option C" },
-        { id: "q2_d", label: "Option D" },
+        { value: "1", label: "Option A" },
+        { value: "2", label: "Option B" },
+        { value: "3", label: "Option C" },
+        { value: "4", label: "Option D" },
       ],
     },
     {
-      id: 3,
+      id: "q3",
       title: "Question 3",
       scenario: "This is scenario 3 of the test.",
       imagePath: media,
       options: [
-        { id: "q3_a", label: "Option A" },
-        { id: "q3_b", label: "Option B" },
-        { id: "q3_c", label: "Option C" },
-        { id: "q3_d", label: "Option D" },
+        { value: "1", label: "Option A" },
+        { value: "2", label: "Option B" },
+        { value: "3", label: "Option C" },
+        { value: "4", label: "Option D" },
       ],
     },
     {
-      id: 4,
+      id: "q4",
       title: "Question 4",
       scenario: "This is scenario 4 of the test.",
       imagePath: media,
       options: [
-        { id: "q4_a", label: "Option A" },
-        { id: "q4_b", label: "Option B" },
-        { id: "q4_c", label: "Option C" },
-        { id: "q4_d", label: "Option D" },
+        { value: "1", label: "Option A" },
+        { value: "2", label: "Option B" },
+        { value: "3", label: "Option C" },
+        { value: "4", label: "Option D" },
       ],
     },
     {
-      id: 5,
+      id: "q5",
       title: "Question 5",
       scenario: "This is scenario 5 of the test.",
       imagePath: media,
       options: [
-        { id: "q5_a", label: "Option A" },
-        { id: "q5_b", label: "Option B" },
-        { id: "q5_c", label: "Option C" },
-        { id: "q5_d", label: "Option D" },
+        { value: "1", label: "Option A" },
+        { value: "2", label: "Option B" },
+        { value: "3", label: "Option C" },
+        { value: "4", label: "Option D" },
       ],
     },
   ]);
@@ -94,6 +95,7 @@ export const TestForm = ({ onSubmit }) => {
   });
 
   const handleSubmitAll = (data) => {
+    console.log("Form data:", data);
     if (onSubmit) {
       onSubmit(data);
     }
