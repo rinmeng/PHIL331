@@ -181,7 +181,7 @@ const FollowupStatistics = () => {
                             />
                             <Bar
                               dataKey="count"
-                              fill="var(--color-desktop)"
+                              fill="var(--chart-5)"
                               radius={[0, 6, 6, 0]}
                             />
                           </BarChart>
