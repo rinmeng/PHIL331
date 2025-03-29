@@ -150,35 +150,48 @@ const FollowupStatistics = () => {
                   <CardDescription>Likert Scale Responses</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-[300px] w-full items-center flex justify-center">
-                    <ChartContainer config={chartConfig}>
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={likertData[question.id]}
-                          layout="vertical"
-                          margin={{ top: 0, right: 30, left: 0, bottom: 0 }}
-                        >
-                          <CartesianGrid horizontal={false} vertical={true} />
-                          <XAxis type="number" />
-                          <YAxis
-                            type="category"
-                            dataKey="label"
-                            width={100}
-                            tickLine={true}
-                            axisLine={true}
-                          />
-                          <ChartTooltip
-                            cursor={false}
-                            content={<ChartTooltipContent hideLabel />}
-                          />
-                          <Bar
-                            dataKey="count"
-                            fill="var(--color-desktop)"
-                            radius={[0, 6, 6, 0]}
-                          />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </ChartContainer>
+                  <div
+                    className="h-[300px] w-full items-center flex justify-center"
+                    style={{ minHeight: "300px", position: "relative" }}
+                  >
+                    {likertData[question.id] &&
+                    likertData[question.id].length > 0 ? (
+                      <ChartContainer
+                        config={chartConfig}
+                        className="w-full h-full"
+                      >
+                        <ResponsiveContainer width="100%" height={300}>
+                          <BarChart
+                            data={likertData[question.id]}
+                            layout="vertical"
+                            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                          >
+                            <CartesianGrid horizontal={false} vertical={true} />
+                            <XAxis type="number" />
+                            <YAxis
+                              type="category"
+                              dataKey="label"
+                              width={100}
+                              tickLine={true}
+                              axisLine={true}
+                            />
+                            <ChartTooltip
+                              cursor={false}
+                              content={<ChartTooltipContent hideLabel />}
+                            />
+                            <Bar
+                              dataKey="count"
+                              fill="var(--color-desktop)"
+                              radius={[0, 6, 6, 0]}
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </ChartContainer>
+                    ) : (
+                      <div className="text-muted-foreground">
+                        No data available
+                      </div>
+                    )}
                   </div>
                 </CardContent>
                 <CardFooter className="flex-col gap-2 text-sm">
