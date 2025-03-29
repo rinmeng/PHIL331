@@ -17,30 +17,29 @@ export const FollowupSection = ({ form }) => {
     () => [
       {
         id: "followup1",
-        question:
-          "How confident are you in your answers to the questions above?",
-        type: "likert",
-        labels: ["Not at all", "Slightly", "Moderately", "Very", "Extremely"],
-      },
-      {
-        id: "followup2",
-        question:
-          "What factors influenced your choices when answering the questions?",
+        question: "What factors influenced your decision the most?",
         type: "text",
         maxWords: 100,
       },
       {
-        id: "followup3",
+        id: "followup2",
         question:
-          "How much would you agree that the scenarios presented were realistic?",
+          "How comfortable are you with AI making decisions that impact human lives?",
         type: "likert",
         labels: [
-          "Strongly disagree",
-          "Disagree",
+          "Very uncomfortable",
+          "Uncomfortable",
           "Neutral",
-          "Agree",
-          "Strongly agree",
+          "Comfortable",
+          "Very comfortable",
         ],
+      },
+      {
+        id: "followup3",
+        question:
+          "Do you believe AI can be conscious in the same way humans are? Why or why not?",
+        type: "text",
+        maxWords: 100,
       },
       {
         id: "followup4",
@@ -52,15 +51,9 @@ export const FollowupSection = ({ form }) => {
       {
         id: "followup5",
         question:
-          "How satisfied were you with the available options for each question?",
-        type: "likert",
-        labels: [
-          "Very unsatisfied",
-          "Unsatisfied",
-          "Neutral",
-          "Satisfied",
-          "Very satisfied",
-        ],
+          "Should AI that demonstrates self-awareness be granted rights similar to humans? Why or why not?",
+        type: "text",
+        maxWords: 100,
       },
     ],
     []
