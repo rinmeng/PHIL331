@@ -1,4 +1,3 @@
-Form.jsx;
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -81,8 +80,6 @@ export const TestForm = ({ onSubmit }) => {
     },
   ]);
 
-  const [showFollowup, setShowFollowup] = useState(false);
-
   const form = useForm({
     defaultValues: {
       // Initialize form values for questions
@@ -96,12 +93,6 @@ export const TestForm = ({ onSubmit }) => {
     },
   });
 
-  const handleSubmitQuestions = (data) => {
-    setShowFollowup(true);
-    // Store question responses to use for follow-up context
-    console.log("Question responses:", data);
-  };
-
   const handleSubmitAll = (data) => {
     if (onSubmit) {
       onSubmit(data);
@@ -111,44 +102,27 @@ export const TestForm = ({ onSubmit }) => {
 
   return (
     <div className="lg:w-1/2 w-full">
-      {!showFollowup ? (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmitQuestions)}
-            className="space-y-8"
-          >
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmitAll)}
+          className="space-y-8"
+        >
+          <div className="space-y-8">
+            <h2 className="text-2xl font-bold">Scenario Questions</h2>
             {questions.map((question) => (
               <QuestionCard key={question.id} question={question} form={form} />
             ))}
+          </div>
 
-            <Button type="submit" className="w-full">
-              Next: Follow-up Questions
-            </Button>
-          </form>
-        </Form>
-      ) : (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmitAll)}
-            className="space-y-8"
-          >
+          <div className="border-t pt-8">
             <FollowupSection form={form} />
+          </div>
 
-            <div className="flex gap-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setShowFollowup(false)}
-              >
-                Back to Questions
-              </Button>
-              <Button type="submit" className="flex-1">
-                Submit All Responses
-              </Button>
-            </div>
-          </form>
-        </Form>
-      )}
+          <Button type="submit" className="w-full">
+            Submit All Responses
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };

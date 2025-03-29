@@ -4,12 +4,13 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormDescription,
   FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import { useState, useEffect } from "react";
+import { z } from "zod";
 
 export const FollowupSection = ({ form }) => {
   // Define follow-up questions (some with Likert scale, some with open-ended responses)
@@ -25,6 +26,7 @@ export const FollowupSection = ({ form }) => {
       question:
         "What factors influenced your choices when answering the questions?",
       type: "text",
+      maxWords: 100,
     },
     {
       id: "followup3",
@@ -44,6 +46,7 @@ export const FollowupSection = ({ form }) => {
       question:
         "Describe any additional information that would have helped you make your decisions.",
       type: "text",
+      maxWords: 100,
     },
     {
       id: "followup5",
@@ -59,6 +62,36 @@ export const FollowupSection = ({ form }) => {
       ],
     },
   ];
+
+  // Word count state for each text question
+  const [wordCounts, setWordCounts] = useState({});
+
+  // Function to count words in text
+  const countWords = (text) => {
+    if (!text) return 0;
+    return text.trim().split(/\s+/).filter(Boolean).length;
+  };
+
+  // Set up validation for text fields
+  useEffect(() => {
+    // Find all text questions
+    const textQuestions = followupQuestions.filter((q) => q.type === "text");
+
+    // Add validation rules to each text field
+    textQuestions.forEach((q) => {
+      const fieldName = q.id;
+      const currentValidator = form.getFieldState(fieldName).error;
+
+      if (!currentValidator) {
+        form.register(fieldName, {
+          validate: (value) => {
+            const wordCount = countWords(value);
+            return wordCount <= 100 || "Response exceeds 100 words limit";
+          },
+        });
+      }
+    });
+  }, [form]);
 
   return (
     <div className="space-y-8">
@@ -90,7 +123,19 @@ export const FollowupSection = ({ form }) => {
                 <FormField
                   control={form.control}
                   name={q.id}
-                  rules={{ required: "This field is required" }}
+                  rules={{
+                    required: "This field is required",
+                    validate:
+                      q.type === "text"
+                        ? (value) => {
+                            const wordCount = countWords(value);
+                            return (
+                              wordCount <= 100 ||
+                              "Response exceeds 100 words limit"
+                            );
+                          }
+                        : undefined,
+                  }}
                   render={({ field }) => (
                     <FormItem className="pl-9 w-full">
                       <FormControl>
@@ -117,11 +162,33 @@ export const FollowupSection = ({ form }) => {
                             </RadioGroup>
                           </div>
                         ) : (
-                          <Textarea
-                            placeholder="Enter your response"
-                            className="min-h-20 mt-2"
-                            {...field}
-                          />
+                          <div className="relative">
+                            <Textarea
+                              placeholder="Enter your response"
+                              className="min-h-20 mt-2"
+                              {...field}
+                              onChange={(e) => {
+                                field.onChange(e);
+                                // Update word count
+                                const count = countWords(e.target.value);
+                                setWordCounts((prev) => ({
+                                  ...prev,
+                                  [q.id]: count,
+                                }));
+                              }}
+                            />
+                            <div className="text-xs text-muted-foreground mt-1 flex justify-end items-center">
+                              <span
+                                className={`font-medium ${
+                                  (wordCounts[q.id] || 0) > 100
+                                    ? "text-destructive"
+                                    : ""
+                                }`}
+                              >
+                                {100 - wordCounts[q.id] || 100} words maximum
+                              </span>
+                            </div>
+                          </div>
                         )}
                       </FormControl>
                       <FormMessage />
