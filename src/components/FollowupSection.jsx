@@ -106,9 +106,9 @@ export const FollowupSection = ({ form }) => {
             responses.
           </p>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-3">
           {followupQuestions.map((q, index) => (
-            <div key={q.id} className="space-y-3">
+            <div key={q.id}>
               {index > 0 && <Separator className="my-4 sm:my-6" />}
               <div className="flex flex-col gap-2">
                 <div className="flex items-start gap-2">
@@ -168,7 +168,11 @@ export const FollowupSection = ({ form }) => {
                           <div className="relative">
                             <Textarea
                               placeholder="Enter your response"
-                              className="min-h-20 mt-2"
+                              className="min-h-20 mt-2 w-full resize-y whitespace-normal break-words overflow-wrap-anywhere"
+                              style={{
+                                wordBreak: "break-word",
+                                overflowWrap: "break-word",
+                              }}
                               {...field}
                               onChange={(e) => {
                                 field.onChange(e);
@@ -188,7 +192,7 @@ export const FollowupSection = ({ form }) => {
                                     : ""
                                 }`}
                               >
-                                {100 - wordCounts[q.id] || 100} words maximum
+                                {100 - wordCounts[q.id] || 100} words left
                               </span>
                             </div>
                           </div>
