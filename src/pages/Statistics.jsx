@@ -169,8 +169,8 @@ const Statistics = () => {
                       <Radar
                         name="Responses"
                         dataKey="value"
-                        stroke="#3b82f6"
-                        fill="var(--color-desktop)"
+                        stroke="var(--chart-3)"
+                        fill="var(--chart-5)"
                         fillOpacity={0.6}
                       />
                     </RadarChart>
