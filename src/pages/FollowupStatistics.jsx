@@ -120,7 +120,9 @@ const FollowupStatistics = () => {
   return (
     <div className="container mx-auto py-8">
       <div className="flex items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold">Follow-up Question Statistics</h1>
+        <h1 className="text-3xl font-bold text-center">
+          Follow-up Question Statistics
+        </h1>
       </div>
 
       {loading ? (

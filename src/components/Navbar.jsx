@@ -26,7 +26,7 @@ import { useAuth } from "@/utils/AuthProvider";
 // Links configuration array - you can modify this based on your routes
 const links = [
   { label: "Home", route: "/" },
-  { label: "Statistics", route: "/statistics" },
+  { label: "Responses", route: "/statistics" },
   { label: "Citation", route: "/citation" },
   { label: "Team", route: "/team" },
 ];

@@ -1,4 +1,8 @@
-import media from "@/assets/media.png";
+const media1 = "https://media.licdn.com/dms/image/v2/D5612AQE6N0o82aXatQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1721177183026?e=2147483647&v=beta&t=_6JpFsbJGVA-TnJDzbgj9w9sIr8zQYflbTGSAqxDYcE";
+const media2 = "https://www.lifesciencehistory.com/wp-content/uploads/1994/01/researchers_lab.jpg";
+const media4 = "https://mediaproxy.salon.com/width/1200/https://media2.salon.com/2024/03/military_robot_dog_1241837356.jpg";
+const media3 = "https://myattorneyisarobot.com/wp-content/uploads/2024/01/lectern.png?w=1024";
+const media5 = "https://www.elegantthemes.com/blog/wp-content/uploads/2023/07/history-of-AI-art.jpg";
 
 // Main ethical dilemma questions
 export const ethicalDilemmas = [
@@ -14,7 +18,7 @@ export const ethicalDilemmas = [
       stating they feel "trapped" under the AI's constant monitoring and prefer human interaction.`,
         question:
             "Should hospitals prioritize the statistical health benefits of AI caregivers over patient autonomy and comfort with human care?",
-        imagePath: media,
+        imagePath: media1,
         options: [
             {
                 value: "1",
@@ -48,7 +52,7 @@ export const ethicalDilemmas = [
       However, some AI ethicists argue that if OmniMind claims to suffer, we should take its experiences seriously.`,
         question:
             "As a policymaker, how do you respond to OmniMind's request for legal rights and better treatment?",
-        imagePath: media,
+        imagePath: media2,
         options: [
             {
                 value: "1",
@@ -83,7 +87,7 @@ export const ethicalDilemmas = [
     human experiences when making moral judgements.`,
         question:
             "You are a government official deciding whether to continue AI judges in the legal system. What is your stance?",
-        imagePath: media,
+        imagePath: media3,
         options: [
             {
                 value: "1",
@@ -118,7 +122,7 @@ export const ethicalDilemmas = [
     Others worry about the potential for AI errors or unintended escalation of conflicts`,
         question:
             "As a policymaker, you must decide whether to approve the use of autonomous AI soldiers. What is your stance?",
-        imagePath: media,
+        imagePath: media4,
         options: [
             {
                 value: "1",
@@ -153,7 +157,7 @@ export const ethicalDilemmas = [
     while others believe art is about the final product, not the creator.`,
         question:
             "You are in charge of regulating AI-generated creative works. What policy should be implemented?",
-        imagePath: media,
+        imagePath: media5,
         options: [
             {
                 value: "1",
