@@ -6,68 +6,71 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { useAuth } from "@/utils/AuthProvider";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useForm } from "react-hook-form";
 import supabase from "@/config/supabaseClient";
 import { toast } from "sonner";
 
-const Home = ({ setOpenLoginDialog }) => {
+const Home = () => {
   const [count, setCount] = useState(0);
-  const { user } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm({
+    defaultValues: {
+      q1: "",
+      q2: "",
+      q3: "",
+      q4: "",
+      q5: "",
+    },
+  });
 
   const fetchCount = useCallback(async () => {
     try {
-      const userIdToFetch = user
-        ? user.id
-        : "7ce00f22-7b01-4ff2-ab96-65589ab0746c";
-
-      const { data, error } = await supabase
+      // Count total number of rows in the table instead of filtering by user
+      const { count: totalCount, error } = await supabase
         .from("user_response")
-        .select("count")
-        .eq("user_id", userIdToFetch)
-        .single();
+        .select("*", { count: "exact", head: true });
 
-      if (error) {
-        // If no row exists yet, set count to 0
-        if (error.code === "PGRST116") {
-          setCount(0);
-          return;
-        }
-        throw error;
-      }
+      if (error) throw error;
 
-      if (data) setCount(data.count);
+      // Set count to total number of rows
+      setCount(totalCount || 0);
     } catch (error) {
       console.error("Error fetching count:", error.message);
       toast.error("Error fetching count");
     }
-  }, [user]);
-  const incrementCount = async () => {
-    if (!user) {
-      toast.error("Please login to increment count");
-      setOpenLoginDialog(true);
-      return;
-    }
+  }, []);
 
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
     try {
-      const newCount = count + 1;
-      // upsert will create new row if user_id doesn't exist
-      // or update count if user_id exists
-      const { error } = await supabase.from("user_response").upsert(
-        {
-          user_id: user.id, // Primary Key
-          count: newCount,
-        },
-        {
-          onConflict: "user_id", // specify which column to check for conflicts
-        }
-      );
+      // Insert the form data into the database
+      const { error } = await supabase.from("user_response").insert([data]);
 
       if (error) throw error;
-      setCount(newCount);
-      toast.success("Count incremented successfully!");
+
+      // Increment the local count and show success message
+      setCount((prevCount) => prevCount + 1);
+      toast.success("Response submitted successfully!");
+
+      // Reset the form
+      form.reset();
     } catch (error) {
-      console.error("Error incrementing count:", error.message);
-      toast.error("Failed to increment count");
+      console.error("Error submitting response:", error.message);
+      toast.error("Failed to submit response");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -75,19 +78,69 @@ const Home = ({ setOpenLoginDialog }) => {
     fetchCount();
   }, [fetchCount]);
 
+  const questions = [
+    "What is your name?",
+    "What is your major?",
+    "What is your favorite philosopher?",
+    "What philosophical topic interests you most?",
+    "Share a philosophical question you've been pondering lately.",
+  ];
+
   return (
-    <div className="h-screen">
-      <div className="flex w-full items-center justify-center mt-4 gap-4">
-        <Card className={"w-3/4 lg:w-1/4"}>
-          <CardHeader className={"text-center text-5xl"}>Home</CardHeader>
-          <CardContent className={"text-center text-4xl"}>
-            <h1>Count: {count}</h1>
+    <div className="min-h-screen p-4">
+      <div className="flex flex-col items-center max-w-3xl mx-auto">
+        <Card className="w-full mb-8">
+          <CardHeader className="text-center">
+            <h1 className="text-3xl font-bold">Philosophy Questionnaire</h1>
+            <p className="text-muted-foreground">Total Responses: {count}</p>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <FormField
+                    key={num}
+                    control={form.control}
+                    name={`q${num}`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Question {num}</FormLabel>
+                        <FormControl>
+                          {num === 5 ? (
+                            <Textarea
+                              placeholder={questions[num - 1]}
+                              {...field}
+                              className="min-h-24"
+                            />
+                          ) : (
+                            <Input
+                              placeholder={questions[num - 1]}
+                              {...field}
+                            />
+                          )}
+                        </FormControl>
+                        <FormDescription>{questions[num - 1]}</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                ))}
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={
+                    isSubmitting ||
+                    Object.values(form.getValues()).some((value) => !value)
+                  }
+                >
+                  {isSubmitting ? "Submitting..." : "Submit Response"}
+                </Button>
+              </form>
+            </Form>
           </CardContent>
-          <CardFooter className={"flex justify-center"}>
-            <Button onClick={incrementCount}>
-              {user ? "Increment Count" : "Login to Increment"}
-            </Button>
-          </CardFooter>
         </Card>
       </div>
     </div>
