@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Home from "@/pages/Home";
-import About from "@/pages/About";
+import Statistics from "@/pages/Statistics";
 import Citation from "@/pages/Citation";
 import Team from "@/pages/Team";
 import {
@@ -98,7 +98,7 @@ function App() {
           path="/"
           element={<Home setOpenLoginDialog={setOpenLoginDialog} />}
         />
-        <Route path="/about" element={<About />} />
+        <Route path="/statistics" element={<Statistics />} />
         <Route path="/citation" element={<Citation />} />
         <Route path="/team" element={<Team />} />
       </Routes>

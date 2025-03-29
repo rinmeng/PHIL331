@@ -27,7 +27,7 @@ const Home = () => {
       <div className="flex flex-col items-center container mx-auto space-y-8">
         <Card className="w-full lg:w-1/2">
           <CardHeader className="text-center text-2xl">
-            <CardTitle>Philosophy Assessment</CardTitle>
+            <CardTitle>Philosophy Discrete Choice Experiments</CardTitle>
             <CardDescription className="flex">
               This test is designed to assess your philosophical beliefs and
               values. Please answer the questions honestly and to the best of

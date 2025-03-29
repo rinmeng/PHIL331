@@ -1,4 +1,4 @@
-const About = () => {
+const Statistics = () => {
   return (
     <div className="h-screen">
       <div className="flex items-center justify-center">
@@ -8,4 +8,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Statistics;
