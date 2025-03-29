@@ -9,94 +9,9 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { useState, useEffect, useMemo } from "react";
-
+import { useState, useEffect } from "react";
+import { followupQuestions } from "@/lib/questions";
 export const FollowupSection = ({ form }) => {
-  // Define follow-up questions (some with Likert scale, some with open-ended responses)
-  const followupQuestions = useMemo(
-    () => [
-      {
-        id: "followup1",
-        question: "What factors influenced your decision the most?",
-        type: "text",
-        maxWords: 100,
-      },
-      {
-        id: "followup2",
-        question:
-          "How comfortable are you with AI making decisions that impact human lives?",
-        type: "likert",
-        labels: [
-          "Very uncomfortable",
-          "Uncomfortable",
-          "Neutral",
-          "Comfortable",
-          "Very comfortable",
-        ],
-      },
-      {
-        id: "followup3",
-        question:
-          "Do you believe AI can be conscious in the same way humans are? Why or why not?",
-        type: "text",
-        maxWords: 100,
-      },
-      {
-        id: "followup4",
-        question:
-          "Should AI that demonstrates self-awareness be granted rights similar to humans? Why or why not?",
-        type: "text",
-        maxWords: 100,
-      },
-      {
-        id: "followup5",
-        question:
-          "Would your decision change if the AI were developed to simulate emotions more convincingly?",
-        type: "text",
-        maxWords: 100,
-      },
-
-      {
-        id: "followup6",
-        question:
-          "Do you think AI should be subject to ethical guidelines different from those applied to humans? Why or why not?",
-        type: "text",
-        maxWords: 100,
-      },
-
-      {
-        id: "followup7",
-        question:
-          "Would you be more trusting of AI if it were developed to be explainable and transparent in its decision-making?",
-        type: "text",
-        maxWords: 100,
-      },
-
-      {
-        id: "followup8",
-        question:
-          "How should society balance the benefits of AI (efficiency, fairness, accuracy) with ethical concerns about AI consciousness?",
-        type: "text",
-        maxWords: 100,
-      },
-      {
-        id: "followup9",
-        question:
-          "What potential risks do you foresee if AI is granted too much decision-making power in human affairs?",
-        type: "text",
-        maxWords: 100,
-      },
-      {
-        id: "followup10",
-        question:
-          "Do you believe human oversight should always be required for AI-driven decisions? If so, in what situations?",
-        type: "text",
-        maxWords: 100,
-      },
-    ],
-    []
-  );
-
   // Word count state for each text question
   const [wordCounts, setWordCounts] = useState({});
 
@@ -119,13 +34,14 @@ export const FollowupSection = ({ form }) => {
       if (!currentValidator) {
         form.register(fieldName, {
           validate: (value) => {
+            if (!value) return true; // Allow empty values
             const wordCount = countWords(value);
             return wordCount <= 100 || "Response exceeds 100 words limit";
           },
         });
       }
     });
-  }, [form, followupQuestions]);
+  }, [form]);
 
   return (
     <div className="space-y-8">
@@ -158,20 +74,6 @@ export const FollowupSection = ({ form }) => {
                 <FormField
                   control={form.control}
                   name={q.id}
-                  rules={{
-                    // Removed the "required" validation
-                    validate:
-                      q.type === "text"
-                        ? (value) => {
-                            if (!value) return true; // Allow empty values
-                            const wordCount = countWords(value);
-                            return (
-                              wordCount <= 100 ||
-                              "Response exceeds 100 words limit"
-                            );
-                          }
-                        : undefined,
-                  }}
                   render={({ field }) => (
                     <FormItem className="pl-9 w-full">
                       <FormControl>
@@ -225,7 +127,7 @@ export const FollowupSection = ({ form }) => {
                                     : ""
                                 }`}
                               >
-                                {100 - wordCounts[q.id] || 100} words left
+                                {100 - (wordCounts[q.id] || 0)} words left
                               </span>
                             </div>
                           </div>
