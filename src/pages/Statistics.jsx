@@ -15,8 +15,9 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, AlertCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ethicalDilemmas } from "@/lib/questions";
 import FollowupStatistics from "./FollowupStatistics";
 // Import Papa Parse for CSV parsing
@@ -138,65 +139,77 @@ const Statistics = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="flex items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold">Response Statistics</h1>
-      </div>
+    <div className="container mx-auto py-8 ">
+      <div className="m-5">
+        <div className="flex items-center justify-center mb-8">
+          <h1 className="text-3xl font-bold">Response Statistics</h1>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {Object.keys(stats).map((questionKey) => (
-          <Card key={questionKey} className="w-full gap-0">
-            <CardHeader className="items-center pb-4">
-              <CardTitle>{getChartTitle(questionKey)}</CardTitle>
-              <CardDescription className="text-center">
-                {ethicalDilemmas.find((q) => q.id === questionKey)?.question ||
-                  ""}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pb-0">
-              {loading ? (
-                <div className="space-y-2">
-                  <Skeleton className="h-[250px] w-full" />
+        <Alert className="mb-6 max-w-4xl mx-auto">
+          <AlertCircle />
+          <AlertTitle>Archived Survey Data</AlertTitle>
+          <AlertDescription>
+            Supabase was leveraged for data collection and storage, but since
+            this survey is archived, the user responses are stored in a CSV file
+            and not in the database.
+          </AlertDescription>
+        </Alert>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {Object.keys(stats).map((questionKey) => (
+            <Card key={questionKey} className="w-full gap-0">
+              <CardHeader className="items-center pb-4">
+                <CardTitle>{getChartTitle(questionKey)}</CardTitle>
+                <CardDescription className="text-center">
+                  {ethicalDilemmas.find((q) => q.id === questionKey)
+                    ?.question || ""}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pb-0">
+                {loading ? (
+                  <div className="space-y-2">
+                    <Skeleton className="h-[250px] w-full" />
+                  </div>
+                ) : (
+                  <div className="mx-auto aspect-square max-h-[250px]  w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RadarChart data={stats[questionKey]} outerRadius={100}>
+                        <PolarGrid />
+                        <PolarAngleAxis
+                          dataKey="option"
+                          tick={{ fontSize: 13, dy: 5 }} // Adjust dy for better spacing
+                        />
+                        <Tooltip
+                          content={<CustomTooltip questionId={questionKey} />}
+                        />
+                        <Radar
+                          name="Responses"
+                          dataKey="value"
+                          stroke="var(--chart-3)"
+                          fill="var(--chart-5)"
+                          fillOpacity={0.6}
+                        />
+                      </RadarChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+              </CardContent>
+              <CardFooter className="flex-col gap-2 text-sm">
+                <div className="flex items-center gap-2 font-medium leading-none">
+                  Total responses: {totalResponses}{" "}
+                  <TrendingUp className="h-4 w-4" />
                 </div>
-              ) : (
-                <div className="mx-auto aspect-square max-h-[250px]  w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={stats[questionKey]} outerRadius={100}>
-                      <PolarGrid />
-                      <PolarAngleAxis
-                        dataKey="option"
-                        tick={{ fontSize: 13, dy: 5 }} // Adjust dy for better spacing
-                      />
-                      <Tooltip
-                        content={<CustomTooltip questionId={questionKey} />}
-                      />
-                      <Radar
-                        name="Responses"
-                        dataKey="value"
-                        stroke="var(--chart-3)"
-                        fill="var(--chart-5)"
-                        fillOpacity={0.6}
-                      />
-                    </RadarChart>
-                  </ResponsiveContainer>
+
+                <div className="flex items-center gap-2 leading-none text-muted-foreground">
+                  Showing response distribution across all options
                 </div>
-              )}
-            </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm">
-              <div className="flex items-center gap-2 font-medium leading-none">
-                Total responses: {totalResponses}{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
 
-              <div className="flex items-center gap-2 leading-none text-muted-foreground">
-                Showing response distribution across all options
-              </div>
-            </CardFooter>
-          </Card>
-        ))}
+        <FollowupStatistics />
       </div>
-
-      <FollowupStatistics />
     </div>
   );
 };

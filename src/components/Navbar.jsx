@@ -129,7 +129,7 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
               >
                 <Moon />
               </Toggle>
-              <AuthButtons />
+              {/* <AuthButtons /> */}
             </div>
           </NavigationMenuList>
         </NavigationMenu>
@@ -188,9 +188,7 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
                 </Toggle>
               </div>
 
-              <div className="mt-4">
-                <AuthButtons />
-              </div>
+              <div className="mt-4">{/* <AuthButtons /> */}</div>
             </SheetContent>
           </Sheet>
         </div>

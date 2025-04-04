@@ -55,21 +55,18 @@ export const TestForm = ({ onSubmit }) => {
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Survey Archive</CardTitle>
-          <CardDescription>
-            This ethical dilemma survey was conducted in March-April 2025.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Clock className="h-5 w-5 text-muted-foreground" />
+          <CardDescription className="flex items-center justify-center ">
+            <Clock className="size-4 text-muted-foreground mr-1" />
             <span className="text-muted-foreground">
               Survey period: March 29 - April 1, 2025
             </span>
-          </div>
-          <p>
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="text-center">
+          <div>
             Thank you to all participants who contributed to this research. The
             results are now available for viewing.
-          </p>
+          </div>
         </CardContent>
         <CardFooter className="flex justify-center">
           <Button onClick={handleViewResponses}>
