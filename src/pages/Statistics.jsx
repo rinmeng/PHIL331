@@ -158,7 +158,7 @@ const Statistics = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {Object.keys(stats).map((questionKey) => (
             <Card key={questionKey} className="w-full gap-0">
-              <CardHeader className="items-center pb-4">
+              <CardHeader className="items-center">
                 <CardTitle>{getChartTitle(questionKey)}</CardTitle>
                 <CardDescription className="text-center">
                   {ethicalDilemmas.find((q) => q.id === questionKey)
