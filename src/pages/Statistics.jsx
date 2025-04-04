@@ -16,10 +16,13 @@ import {
   Tooltip,
 } from "recharts";
 import { TrendingUp } from "lucide-react";
-import supabase from "@/config/supabaseClient";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ethicalDilemmas } from "@/lib/questions";
 import FollowupStatistics from "./FollowupStatistics";
+// Import Papa Parse for CSV parsing
+import Papa from "papaparse";
+// Import the CSV data as raw text
+import csvDataRaw from "@/assets/user_response_rows.csv?raw";
 
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
@@ -33,28 +36,29 @@ const Statistics = () => {
   const [totalResponses, setTotalResponses] = useState(0);
 
   useEffect(() => {
+    // Parse the CSV data
     const fetchData = async () => {
       try {
-        const { data, error } = await supabase
-          .from("user_response")
-          .select("q1, q2, q3, q4, q5");
+        // Parse the CSV data using Papa Parse
+        const parsedData = Papa.parse(csvDataRaw, {
+          header: true,
+          skipEmptyLines: true,
+        }).data;
 
-        if (error) throw error;
-
-        setTotalResponses(data.length);
+        setTotalResponses(parsedData.length);
 
         // Process the data for visualization
         const processedStats = {
-          q1: formatForRadarChart(countResponses(data, "q1")),
-          q2: formatForRadarChart(countResponses(data, "q2")),
-          q3: formatForRadarChart(countResponses(data, "q3")),
-          q4: formatForRadarChart(countResponses(data, "q4")),
-          q5: formatForRadarChart(countResponses(data, "q5")),
+          q1: formatForRadarChart(countResponses(parsedData, "q1")),
+          q2: formatForRadarChart(countResponses(parsedData, "q2")),
+          q3: formatForRadarChart(countResponses(parsedData, "q3")),
+          q4: formatForRadarChart(countResponses(parsedData, "q4")),
+          q5: formatForRadarChart(countResponses(parsedData, "q5")),
         };
 
         setStats(processedStats);
       } catch (error) {
-        console.error("Error fetching statistics:", error);
+        console.error("Error processing statistics:", error);
       } finally {
         setLoading(false);
       }

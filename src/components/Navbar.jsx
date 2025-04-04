@@ -11,7 +11,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { LogIn, LogOut, Menu, Moon } from "lucide-react";
+import { LogIn, LogOut, Menu, Moon, Archive } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -22,11 +22,12 @@ import {
 } from "@/components/ui/sheet";
 import { Toggle } from "@/components/ui/toggle";
 import { useAuth } from "@/utils/AuthProvider";
+import { Badge } from "@/components/ui/badge";
 
 // Links configuration array - you can modify this based on your routes
 const links = [
   { label: "Home", route: "/" },
-  { label: "Responses", route: "/statistics" },
+  { label: "Responses", route: "/statistics", badge: "Results Available" },
 ];
 
 const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
@@ -83,8 +84,14 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
             onClick={() => handleNavigation("/")}
             className="font-bold text-xl"
           >
-            PHIL331
+            PHIL331 <Archive className="h-4 w-4 ml-2 text-muted-foreground" />
           </Button>
+          <Badge
+            variant="outline"
+            className="ml-2 bg-muted text-muted-foreground"
+          >
+            Survey Archived
+          </Badge>
         </div>
 
         {/* Desktop Navigation */}
@@ -92,17 +99,24 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
           <NavigationMenuList>
             {links.map((link) => (
               <NavigationMenuItem key={link.route}>
-                <Button
-                  variant="outline"
-                  onClick={() => handleNavigation(link.route)}
-                  className={`${navigationMenuTriggerStyle()} ${
-                    location.pathname === link.route
-                      ? "bg-accent text-accent-foreground"
-                      : ""
-                  }`}
-                >
-                  {link.label}
-                </Button>
+                <div className="relative">
+                  <Button
+                    variant="outline"
+                    onClick={() => handleNavigation(link.route)}
+                    className={`${navigationMenuTriggerStyle()} ${
+                      location.pathname === link.route
+                        ? "bg-accent text-accent-foreground"
+                        : ""
+                    }`}
+                  >
+                    {link.label}
+                    {link.badge && link.route === "/statistics" && (
+                      <span className="ml-2 text-xs px-1.5 py-0.5 rounded-md bg-primary text-primary-foreground">
+                        {link.badge}
+                      </span>
+                    )}
+                  </Button>
+                </div>
               </NavigationMenuItem>
             ))}
             <div className="flex gap-4 items-center">
@@ -134,6 +148,9 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
               <SheetHeader>
                 <SheetTitle>
                   <div className="text-xl font-bold">PHIL331 Project</div>
+                  <Badge variant="outline" className="mt-1">
+                    Survey Archived
+                  </Badge>
                 </SheetTitle>
                 <SheetDescription>Navigation menu</SheetDescription>
               </SheetHeader>
@@ -150,11 +167,16 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
                     }`}
                   >
                     {link.label}
+                    {link.badge && link.route === "/statistics" && (
+                      <span className="ml-2 text-xs px-1.5 py-0.5 rounded-md bg-primary text-primary-foreground">
+                        {link.badge}
+                      </span>
+                    )}
                   </Button>
                 ))}
               </nav>
               {/* toggle dark/light mode */}
-              <div className="flex gap-4 justify-center">
+              <div className="flex gap-4 justify-center mt-4">
                 <Toggle
                   variant={"outline"}
                   aria-label="Toggle italic"
@@ -166,7 +188,9 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
                 </Toggle>
               </div>
 
-              <AuthButtons />
+              <div className="mt-4">
+                <AuthButtons />
+              </div>
             </SheetContent>
           </Sheet>
         </div>

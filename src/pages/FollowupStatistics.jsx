@@ -17,7 +17,6 @@ import {
   Tooltip,
 } from "recharts";
 import { TrendingUp } from "lucide-react";
-import supabase from "@/config/supabaseClient";
 import { Skeleton } from "@/components/ui/skeleton";
 import { followupQuestions } from "@/lib/questions";
 import {
@@ -26,6 +25,10 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { ScrollArea } from "@/components/ui/scroll-area";
+// Import Papa Parse for CSV parsing
+import Papa from "papaparse";
+// Import the CSV data as raw text
+import csvDataRaw from "@/assets/user_response_rows.csv?raw";
 
 const FollowupStatistics = () => {
   const [loading, setLoading] = useState(true);
@@ -36,19 +39,16 @@ const FollowupStatistics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Get follow-up question IDs
-        const followupIds = followupQuestions.map((q) => q.id);
-
-        // Create a selection string for Supabase query
-        const selectionString = followupIds.join(", ");
-
-        const { data, error } = await supabase
-          .from("user_response")
-          .select(selectionString);
-
-        if (error) throw error;
+        // Parse the CSV data using Papa Parse
+        const data = Papa.parse(csvDataRaw, {
+          header: true,
+          skipEmptyLines: true,
+        }).data;
 
         setTotalResponses(data.length);
+
+        // Get follow-up question IDs
+        // const followupIds = followupQuestions.map((q) => q.id);
 
         // Process Likert scale questions
         const likertQuestions = followupQuestions.filter(
@@ -100,7 +100,7 @@ const FollowupStatistics = () => {
 
         setTextResponses(textResults);
       } catch (error) {
-        console.error("Error fetching follow-up statistics:", error);
+        console.error("Error processing follow-up statistics:", error);
       } finally {
         setLoading(false);
       }
