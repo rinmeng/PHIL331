@@ -165,15 +165,22 @@ const Statistics = () => {
                     ?.question || ""}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pb-0">
+              <CardContent className="pb-0 px-0">
                 {loading ? (
                   <div className="space-y-2">
                     <Skeleton className="h-[250px] w-full" />
                   </div>
                 ) : (
-                  <div className="mx-auto aspect-square max-h-[300px] w-full p-5">
+                  <div
+                    className="mx-auto
+                   aspect-square max-h-[250px] w-full"
+                  >
                     <ResponsiveContainer width="100%" height="100%">
-                      <RadarChart data={stats[questionKey]} outerRadius={100}>
+                      <RadarChart
+                        data={stats[questionKey]}
+                        outerRadius={100}
+                        className="px-2"
+                      >
                         <PolarGrid />
                         <PolarAngleAxis
                           dataKey="option"
