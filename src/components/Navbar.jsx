@@ -27,8 +27,6 @@ import { useAuth } from "@/utils/AuthProvider";
 const links = [
   { label: "Home", route: "/" },
   { label: "Responses", route: "/statistics" },
-  { label: "Citation", route: "/citation" },
-  { label: "Team", route: "/team" },
 ];
 
 const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
