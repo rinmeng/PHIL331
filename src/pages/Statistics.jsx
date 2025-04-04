@@ -173,7 +173,7 @@ const Statistics = () => {
                 ) : (
                   <div
                     className="mx-auto
-                   aspect-square max-h-[250px] w-full"
+                   aspect-square max-h-[300px] w-full"
                   >
                     <ResponsiveContainer width="100%" height="100%">
                       <RadarChart
