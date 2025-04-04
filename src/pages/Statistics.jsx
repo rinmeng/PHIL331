@@ -145,13 +145,13 @@ const Statistics = () => {
           <h1 className="text-3xl font-bold">Response Statistics</h1>
         </div>
 
-        <Alert className="mb-6 max-w-4xl mx-auto">
+        <Alert variant={"destructive"} className="mb-6 max-w-4xl mx-auto">
           <AlertCircle />
           <AlertTitle>Archived Survey Data</AlertTitle>
           <AlertDescription>
             Supabase was leveraged for data collection and storage, but since
-            this survey is archived, the user responses are stored in a CSV file
-            and not in the database.
+            this survey is conducted, the user responses are stored & read from
+            a CSV file and not in the database.
           </AlertDescription>
         </Alert>
 
@@ -171,7 +171,7 @@ const Statistics = () => {
                     <Skeleton className="h-[250px] w-full" />
                   </div>
                 ) : (
-                  <div className="mx-auto aspect-square max-h-[250px]  w-full">
+                  <div className="mx-auto aspect-square max-h-[300px] w-full p-5">
                     <ResponsiveContainer width="100%" height="100%">
                       <RadarChart data={stats[questionKey]} outerRadius={100}>
                         <PolarGrid />
