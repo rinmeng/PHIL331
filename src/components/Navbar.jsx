@@ -27,7 +27,7 @@ import { Badge } from "@/components/ui/badge";
 // Links configuration array - you can modify this based on your routes
 const links = [
   { label: "Home", route: "/" },
-  { label: "Responses", route: "/statistics", badge: "Results Available" },
+  { label: "Responses", route: "/statistics" },
 ];
 
 const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
@@ -84,14 +84,8 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
             onClick={() => handleNavigation("/")}
             className="font-bold text-xl"
           >
-            PHIL331 <Archive className="h-4 w-4 ml-2 text-muted-foreground" />
+            PHIL331
           </Button>
-          <Badge
-            variant="outline"
-            className="ml-2 bg-muted text-muted-foreground"
-          >
-            Survey Archived
-          </Badge>
         </div>
 
         {/* Desktop Navigation */}
@@ -110,11 +104,6 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
                     }`}
                   >
                     {link.label}
-                    {link.badge && link.route === "/statistics" && (
-                      <span className="ml-2 text-xs px-1.5 py-0.5 rounded-md bg-primary text-primary-foreground">
-                        {link.badge}
-                      </span>
-                    )}
                   </Button>
                 </div>
               </NavigationMenuItem>
@@ -148,9 +137,6 @@ const Navbar = ({ setOpenLoginDialog, setFeedbackMessage }) => {
               <SheetHeader>
                 <SheetTitle>
                   <div className="text-xl font-bold">PHIL331 Project</div>
-                  <Badge variant="outline" className="mt-1">
-                    Survey Archived
-                  </Badge>
                 </SheetTitle>
                 <SheetDescription>Navigation menu</SheetDescription>
               </SheetHeader>
